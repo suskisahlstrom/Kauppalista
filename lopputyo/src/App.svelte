@@ -1,26 +1,35 @@
 <script>
 	export let name;
-	import Modal from './modal.svelte';
-	import button from './button.svelte';
-	let LisääTuoteSivu = false;
-	function LisääTuote() {
-		LisääTuoteSivu = true;
+	import Modal from './Modal.svelte';
+	import Button from './Button.svelte';
+	import Checkout from './Checkout.svelte';
+
+	
+
+	let checkoutVisible = false;
+
+	function LisaaTuote(){
+		checkoutVisible = true;
 	}
+	
 </script>
 
 <main>
 	<h1>{name}</h1>
 	<label for="Lisää" />
 	<Button
-		type="button"
+		type="Button"
 		id="Lisää"
-		on:click={LisääTuote}>Lisää
+		on:click={LisaaTuote}>Lisää
 	</Button>
     
 
 </main>
-
+{#if checkoutVisible}
+  <Checkout on:peruutettu={peruutaTilaus} on:maksettu={tilausMaksettu} />
+{/if}
 <style>
+	
 	main {
 		padding: 1em;
 		margin: 0 auto;

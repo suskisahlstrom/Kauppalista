@@ -1,5 +1,5 @@
 <script>
-    import button from './button.svelte';
+    import Button from './Button.svelte';
 </script>
 
 <div class="backdrop" on:click />
