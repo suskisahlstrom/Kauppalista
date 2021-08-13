@@ -1,48 +1,61 @@
 <script>
-	export let name;
-	import Modal from './Modal.svelte';
+	const elain = { };
+	let h = 0;
+	let naytakentat = false;
+  
+	let tuote = '';
+	let kplMaara = '';
+	let tuoteOsasto = '';
+	const nollaa = () => {
+	  tuote = '';
+	  kplMaara = '';
+	  tuoteOsasto = '';
+	};
+	import Otsikko from './Otsikko.svelte';
+	import Tiedot from './Tiedot.svelte';
 	import Button from './Button.svelte';
-	import Checkout from './Checkout.svelte';
-
-	
-
-	let checkoutVisible = false;
-
-	function LisaaTuote(){
-		checkoutVisible = true;
-	}
-	
-</script>
-
-<main>
-	<h1>{name}</h1>
-	<label for="Lisää" />
-	<Button
-		type="Button"
-		id="Lisää"
-		on:click={LisaaTuote}>Lisää
-	</Button>
-    
-
-</main>
-{#if checkoutVisible}
-  <Checkout on:peruutettu={peruutaTilaus} on:maksettu={tilausMaksettu} />
-{/if}
-<style>
-	
+	import Tuotteet from './Tuotteet.svelte';
+	import UusiTuote from './UusiTuote.svelte';
+  
+	let lisaa = () => {
+	  lemmikit.push({ tuote: tuote, kplMaara: kplMaara, tuoteOsasto: tuoteOsasto });
+	  lemmikit = lemmikit;
+	};
+	let elaimet = [
+	  
+	];
+	const poistaKoira = (ce) => {
+	  elaimet = elaimet.filter((nim) => nim.nimi !== ce.detail);
+	};
+	const lisaaElain = (ce) => {
+	  elaimet.push(ce.detail);
+	  elaimet = elaimet;
+	  naytakentat = false;
+	};
+  </script>
+  
+  <main>
+	<Otsikko />
+	<Tiedot {tuote} {kplMaara} {tuoteOsasto}  />
+	{#if naytakentat}
+	  <UusiTuote on:lisaa={lisaaElain} on:nollaa={() => (naytakentat = false)} />
+	{/if}
+	<Button on:click={() => (naytakentat = !naytakentat)}>Tiedot</Button>
+	<Tuotteet {elaimet} {elain} on:poista={poistaKoira} />
+  </main>
+  
+  <style>
 	main {
-		padding: 1em;
-		margin: 0 auto;
+	  text-align: center;
+	  padding: 1em;
+	  max-width: 240px;
+	  margin: 0 auto;
 	}
-
-	h1 {
-		color: #fa4fe3;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
+  
+	@media (min-width: 640px) {
+	  main {
+		max-width: none;
+	  }
 	}
-	
-	
-		
-	
-</style>
+  </style>
+  
