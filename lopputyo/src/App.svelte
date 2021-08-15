@@ -1,9 +1,8 @@
 <script>
-	const elain = { };
-	let h = 0;
+	const tuotte = {haku: 'tuote', laji: 'tuote'};
 	let naytakentat = false;
   
-	let tuote = '';
+	let tuote = ''; // Määritellään tuotteiden kategoriat
 	let kplMaara = '';
 	let tuoteOsasto = '';
 	const nollaa = () => {
@@ -16,46 +15,43 @@
 	import Button from './Button.svelte';
 	import Tuotteet from './Tuotteet.svelte';
 	import UusiTuote from './UusiTuote.svelte';
+	
   
 	let lisaa = () => {
-	  lemmikit.push({ tuote: tuote, kplMaara: kplMaara, tuoteOsasto: tuoteOsasto });
-	  lemmikit = lemmikit;
+	  tuotteet.push({ tuote: tuote, kplMaara: kplMaara, tuoteOsasto: tuoteOsasto }); 
+	  tuotteet = tuotteet;
 	};
-	let elaimet = [
-	  
+	let lisatytTuotteet = [
+		
 	];
-	const poistaKoira = (ce) => {
-	  elaimet = elaimet.filter((nim) => nim.nimi !== ce.detail);
+
+	const poistaTuote = (ce) => { // Funktio tuotteiden poistamista varten
+	  lisatytTuotteet = lisatytTuotteet.filter((tuot) => tuot.tuote !== ce.detail);
 	};
-	const lisaaElain = (ce) => {
-	  elaimet.push(ce.detail);
-	  elaimet = elaimet;
+	const lisaaTuote = (ce) => {  // Funktio tuotteiden lisäämiseen
+	  lisatytTuotteet.push(ce.detail);
+	  lisatytTuotteet = lisatytTuotteet;
 	  naytakentat = false;
 	};
   </script>
   
   <main>
 	<Otsikko />
-	<Tiedot {tuote} {kplMaara} {tuoteOsasto}  />
+	<Tiedot {tuote} {kplMaara} {tuoteOsasto}  /> <!--Haetaan tiedot.sveltestä tietokortit pääsivulle-->
 	{#if naytakentat}
-	  <UusiTuote on:lisaa={lisaaElain} on:nollaa={() => (naytakentat = false)} />
+	  <UusiTuote on:lisaa={lisaaTuote} on:nollaa={() => (naytakentat = false)} /> <!--if funktio joka lukee onko popup ikkunassa painettu lisää nappia tai peruuta nappia ja sulkee ikkunan-->
 	{/if}
-	<Button on:click={() => (naytakentat = !naytakentat)}>Tiedot</Button>
-	<Tuotteet {elaimet} {elain} on:poista={poistaKoira} />
+	<Button on:click={() => (naytakentat = !naytakentat)}>Lisää</Button>
+	<Tuotteet {lisatytTuotteet} {tuotte} on:poista={poistaTuote} />
   </main>
   
   <style>
 	main {
 	  text-align: center;
 	  padding: 1em;
-	  max-width: 240px;
+	  max-width: 480px;
 	  margin: 0 auto;
-	}
-  
-	@media (min-width: 640px) {
-	  main {
-		max-width: none;
-	  }
+	  font-size: 20px;
 	}
   </style>
   

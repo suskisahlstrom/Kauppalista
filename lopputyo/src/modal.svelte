@@ -2,9 +2,9 @@
     import Button from './Button.svelte';
 </script>
 
-<div class="backdrop" on:click />
+<div class="backdrop" on:click /> <!--Modalin koodi luo popup ikkunan tuotteiden lisäystä varten-->
 
-<div class="modal">
+<div class="modal"> 
     <header>
         <slot name="header" />
     </header>

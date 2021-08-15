@@ -1,10 +1,10 @@
 <script>
-    import Tiedot from './Tiedot.svelte';
-    export let elaimet;
-    export let elain;
+    import Tiedot from './Tiedot.svelte'; //Koodin pätkä otettu lemmikkiprojektista, en muista tarkkaa toimintaa mutta sivusto ei toimi ilman tätä.
+    export let lisatytTuotteet;
+    export let tuotte;
   </script>
   
-  {#each elaimet as elukka}
-    <Tiedot {...elukka} {...elain} on:poista />
+  {#each lisatytTuotteet as tuot}
+    <Tiedot {...tuot} {...tuotte} on:poista /> 
   {/each}
   
